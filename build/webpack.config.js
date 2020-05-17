@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const exampleList = require('./exampleList');
 const exampleNames = exampleList.map(f => path.basename(f));
@@ -67,6 +68,11 @@ module.exports = {
       template: path.resolve(__dirname, '../src/index.html'),
       examples: exampleNames,
       excludeChunks: exampleNames,
+    }),
+    new CopyPlugin({
+      patterns: [
+        { from: 'src/basis-transcoder/build/basis_transcoder.wasm', to: './' },
+      ],
     }),
   ],
   devtool: 'source-map',

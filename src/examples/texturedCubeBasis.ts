@@ -1,10 +1,11 @@
 import { mat4, vec3 } from 'gl-matrix';
-import { createTextureFromImage, updateBufferData } from '../helpers';
+import { updateBufferData } from '../helpers';
+import { createTextureFromBasis } from '../helpers-basis';
 import { cubeVertexArray, cubeVertexSize, cubeUVOffset, cubePositionOffset } from '../cube';
 import glslangModule from '../glslang';
 
-export const title = 'Textured Cube';
-export const description = 'This example shows how to bind and sample textures.';
+export const title = 'Textured Cube Basis';
+export const description = 'This example shows how to use Basis Universal textures with WebGPU.';
 
 export async function init(canvas: HTMLCanvasElement) {
   const vertexShaderGLSL = `#version 450
@@ -165,7 +166,7 @@ export async function init(canvas: HTMLCanvasElement) {
     usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST,
   });
 
-  const cubeTexture = await createTextureFromImage(device, 'assets/img/Di-3d.png', GPUTextureUsage.SAMPLED);
+  const cubeTexture = await createTextureFromBasis(device, 'assets/img/kodim26_uastc_1024.basis', GPUTextureUsage.SAMPLED);
 
   const sampler = device.createSampler({
     magFilter: "linear",
